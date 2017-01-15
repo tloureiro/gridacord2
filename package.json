@@ -1,0 +1,30 @@
+{
+  "name": "gridacord2",
+  "version": "1.0.0",
+  "description": "a jquery accordion for image grids",
+  "main": "index.html",
+  "dependencies": {
+    "eslint": "^3.13.1",
+    "eslint-config-airbnb": "^14.0.0"
+  },
+  "devDependencies": {
+    "eslint": "^3.13.1",
+    "eslint-config-airbnb": "^14.0.0",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-jsx-a11y": "^3.0.2",
+    "eslint-plugin-react": "^6.9.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tloureiro/gridacord2.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tloureiro/gridacord2/issues"
+  },
+  "homepage": "https://github.com/tloureiro/gridacord2#readme"
+}
