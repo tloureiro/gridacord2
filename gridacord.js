@@ -1,10 +1,12 @@
 /* global $ */
 
+//TODO fix lint errors
+
 $(function () {
   var target = $('#gridacord-container');
   var newExpandedWidthPct;
   var newRemainingWidthPct;
-  var newExpandedHeightPct
+  var newExpandedHeightPct;
   var newRemainingHeightPct;
 
   var maxRatio = 80;
@@ -14,9 +16,8 @@ $(function () {
   var itemsQtdSquareRootMinusOne = Math.sqrt(itemsQtd) - 1;
   var itemSize;
 
-
   /**
-   * TOBEIMPLEMENTED: implement this function
+   * TODO: implement this function
    * @returns {boolean}
    */
   function isGridValid() {
@@ -24,13 +25,24 @@ $(function () {
   }
 
   function focusImages(transition) {
-
     $('.item', target).each(function (ignore, item) {
+      var focusX = $(item).attr('data-focus-x') ? $(item).attr('data-focus-x') : 50;
+      var focusY = $(item).attr('data-focus-y') ? $(item).attr('data-focus-y') : 50;
 
-      var focusX = $(item).attr("data-focus-x");
-      var focusY = $(item).attr("data-focus-y");
+      var itemWidth = $(item).width();
+      var itemHeight = $(item).height();
 
-      $(item).animate({}, {'duration': transition ? transitionTime : 0, 'queue': false});
+      var newImageFocusX = ($('img', item).get(0).naturalWidth * (focusX / 100)) - (itemWidth / 2);
+      var newImageFocusY = ($('img', item).get(0).naturalHeight * (focusY / 100)) - (itemHeight / 2);
+
+      $('img', item).animate({ top: '-' + newImageFocusY + 'px',
+        left: '-' + newImageFocusX + 'px' }, { duration: transition ? transitionTime : 0, queue: false });
+    });
+  }
+
+  function unfocusImages() {
+    $('.item', target).each(function (index, item) {
+      $('img', item).animate({ top: '0px', left: '0px' }, { duration: transitionTime, queue: false });
     });
   }
 
@@ -76,6 +88,8 @@ $(function () {
         {'height': '100%', 'width': '100%'}, {'duration': transitionTime, 'queue': false}
       );
     }
+
+    focusImages(true);
 
     for (y = 0; y < itemsQtdSquareRoot; y+=1) {
 
@@ -142,10 +156,13 @@ $(function () {
     var x = Math.floor(index % itemsQtdSquareRoot);
 
     resizeItems(x, y);
+    unfocusImages();
 
   }, function () {
+    focusImages(true);
 
     // $('img',this).css('max-width', 'none').css('max-height', 'none');
+    //TODO move this to a function
     $('img', this).animate({
       'width': $('img', this).get(0).naturalWidth,
       'height': $('img', this).get(0).naturalHeight
