@@ -30,8 +30,8 @@ $(function () {
       var newImageFocusX;
       var newImageFocusY;
 
-      newImageFocusX = ($('img', item).get(0).naturalWidth * (focusX / 100)) - (itemSizePixels / 2);
-      newImageFocusY = ($('img', item).get(0).naturalHeight * (focusY / 100)) - (itemSizePixels / 2);
+      newImageFocusX = ($('img', item).eq(0).width() * (focusX / 100)) - (itemSizePixels / 2);
+      newImageFocusY = ($('img', item).eq(0).height() * (focusY / 100)) - (itemSizePixels / 2);
 
       $('img', item).animate({ top: '-' + newImageFocusY + 'px',
         left: '-' + newImageFocusX + 'px' }, { duration: transition ? transitionTime : 0, queue: false });
@@ -45,13 +45,26 @@ $(function () {
   }
 
   function initGrid() {
+
+    var maxImageWidthHeight;
+
     itemSizePct = (100 / itemsQtdSquareRoot) + '%';
     itemSizePixels = $('.item', target).eq(0).width();
+
+    maxImageWidthHeight = (itemSizePixels * itemsQtdSquareRoot) * (maxRatio / 100);
 
     $('.line', target).css('height', itemSizePct);
     $('.item', target).css('width', itemSizePct);
     $('.item img', target).each(function (ignore, value) {
-      $(value).css('width', $(this).get(0).naturalWidth).css('height', $(this).get(0).naturalHeight);
+      if ($(value).get(0).naturalWidth > maxImageWidthHeight &&
+            $(value).get(0).naturalWidth >= $(value).get(0).naturalHeight) {
+        $(value).css('width', maxImageWidthHeight);
+      }
+
+      if ($(value).get(0).naturalHeight > maxImageWidthHeight &&
+            $(value).get(0).naturalHeight > $(value).get(0).naturalWidth) {
+        $(value).css('height', maxImageWidthHeight);
+      }
     });
 
     focusImages(false);
