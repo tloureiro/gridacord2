@@ -36,6 +36,17 @@ html,body{
 
 #container .item img {
     position: relative;
+    transition: filter 1s ease-in-out;
+    -webkit-transition: -webkit-filter 1s ease-in-out;
+    -webkit-filter: grayscale(100%);
+    filter: grayscale(100%);
+}
+
+#container .item:hover > img {
+    transition: filter 1s ease-in-out;
+    -webkit-transition:-webkit-filter 1s ease-in-out;
+    -webkit-filter: grayscale(0%);
+    filter: grayscale(0%);
 }
 
 #container .item .item-desc {
@@ -45,4 +56,10 @@ html,body{
     color: black;
     text-align: center;
     display: none;
+}
+
+#container .item .item-desc .dash {
+    width: 35px;
+    border-bottom: 4px solid black;
+    margin: 0 auto;
 }

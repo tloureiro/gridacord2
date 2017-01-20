@@ -85,7 +85,7 @@ $(function () {
       }
 
       $('.item-desc', value).css('width', $('img', value).width() * 0.95)
-          .css('bottom', $('img', value).height() * 0.3)
+          .css('bottom', $('img', value).height() * 0.2)
           .css('left', $('img', value).width() * 1);
     });
 
