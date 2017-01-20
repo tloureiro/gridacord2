@@ -37,3 +37,12 @@ html,body{
 #container .item img {
     position: relative;
 }
+
+#container .item .item-desc {
+    position: relative;
+    background-color: white;
+    opacity: 0.9;
+    color: black;
+    text-align: center;
+    display: none;
+}

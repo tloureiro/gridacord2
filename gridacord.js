@@ -44,8 +44,26 @@ $(function () {
     });
   }
 
-  function initGrid() {
+  function resetItemSizes() {
+    $('.item', target).animate({ width: itemSizePct }, { duration: transitionTime, queue: false });
+    $('.line', target).animate({ height: itemSizePct }, { duration: transitionTime, queue: false });
+  }
 
+  function showDescription(item) {
+    $('.item-desc', item).animate({ left: $('img', item).width() * 0.1 }, {
+      duration: transitionTime,
+      queue: false
+    }).fadeIn({ duration: 1000 });
+  }
+
+  function hideDescription(item) {
+    $('.item-desc', item).animate({ left: $('img', item).width() * 1 }, {
+      duration: transitionTime,
+      queue: false
+    }).fadeOut({ duration: 400, queue: false });
+  }
+
+  function initGrid() {
     var maxImageWidthHeight;
 
     itemSizePct = (100 / itemsQtdSquareRoot) + '%';
@@ -55,22 +73,26 @@ $(function () {
 
     $('.line', target).css('height', itemSizePct);
     $('.item', target).css('width', itemSizePct);
-    $('.item img', target).each(function (ignore, value) {
-      if ($(value).get(0).naturalWidth > maxImageWidthHeight &&
-            $(value).get(0).naturalWidth >= $(value).get(0).naturalHeight) {
-        $(value).css('width', maxImageWidthHeight);
+    $('.item', target).each(function (ignore, value) {
+      if ($('img', value).get(0).naturalWidth > maxImageWidthHeight &&
+            $('img', value).get(0).naturalWidth >= $('img', value).get(0).naturalHeight) {
+        $('img', value).css('width', maxImageWidthHeight);
       }
 
-      if ($(value).get(0).naturalHeight > maxImageWidthHeight &&
-            $(value).get(0).naturalHeight > $(value).get(0).naturalWidth) {
-        $(value).css('height', maxImageWidthHeight);
+      if ($('img', value).get(0).naturalHeight > maxImageWidthHeight &&
+            $('img', value).get(0).naturalHeight > $('img', value).get(0).naturalWidth) {
+        $('img', value).css('height', maxImageWidthHeight);
       }
+
+      $('.item-desc', value).css('width', $('img', value).width() * 0.95)
+          .css('bottom', $('img', value).height() * 0.3)
+          .css('left', $('img', value).width() * 1);
     });
 
     focusImages(false);
   }
 
-  function resizeItemsFocus(selectedItemX, selectedItemY) {
+  function resizeItems(selectedItemX, selectedItemY) {
     var imgWidth = $('.item img', $('.line', target).eq(selectedItemY)).eq(selectedItemX).width();
     var imgHeight = $('.item img', $('.line', target).eq(selectedItemY)).eq(selectedItemX).height();
     var x;
@@ -149,15 +171,13 @@ $(function () {
     var y = parseInt(index / itemsQtdSquareRoot, 10);
     var x = parseInt(index % itemsQtdSquareRoot, 10);
 
-    resizeItemsFocus(x, y);
+    resizeItems(x, y);
     unfocusImages();
+    showDescription(this);
   }, function () {
     focusImages(true);
-
-    //TODO move this to a function
-    $('.item', target).animate({ width: itemSizePct }, { duration: transitionTime, queue: false });
-    $('.line', target).animate({ height: itemSizePct }, { duration: transitionTime, queue: false });
+    resetItemSizes();
+    hideDescription(this);
   });
-
 });
 
