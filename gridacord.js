@@ -7,7 +7,7 @@ $(function () {
   var newExpandedHeightPct;
   var newRemainingHeightPct;
 
-  var maxRatio = 80;
+  var maxRatio = 70;
   var transitionTime = 800;
   var itemsQtd = $('.item', target).length;
   var itemsQtdSquareRoot = Math.sqrt(itemsQtd);
@@ -104,20 +104,12 @@ $(function () {
 
       newExpandedHeightPct = maxRatio * (imgHeight / imgWidth);
       newRemainingHeightPct = (100 - newExpandedHeightPct) / itemsQtdSquareRootMinusOne;
-
-      $('.item', $('.line', target).eq(selectedItemY)).eq(selectedItemX).animate(
-        { width: '100%', height: '100%' }, { duration: transitionTime, queue: false }
-      );
     } else {
       newExpandedHeightPct = maxRatio;
-
       newRemainingHeightPct = (100 - maxRatio) / itemsQtdSquareRootMinusOne;
+
       newExpandedWidthPct = maxRatio * (imgWidth / imgHeight);
       newRemainingWidthPct = (100 - newExpandedWidthPct) / itemsQtdSquareRootMinusOne;
-
-      $('.item', $('.line', target).eq(selectedItemY)).eq(selectedItemX).animate(
-        { height: '100%', width: '100%' }, { duration: transitionTime, queue: false }
-      );
     }
 
     focusImages(true);
